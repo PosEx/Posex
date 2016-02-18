@@ -27,6 +27,14 @@
 #include "guiutil.h"
 #include "rpcconsole.h"
 #include "wallet.h"
+#include "poloniex.h"
+#include "kraken.h"
+#include "bleutrade.h"
+#include "bitstamp.h"
+#include "bittrex.h"
+#include "ccex.h"
+#include "btce.h"
+#include "yobit.h"
 
 #ifdef Q_OS_MAC
 #include "macdockiconhandler.h"
@@ -113,6 +121,15 @@ PosexGUI::PosexGUI(QWidget *parent):
     blockBrowser = new BlockBrowser(this);
     chatWindow = new ChatWindow(this);
 
+    poloniexPage = new Poloniex(this);
+    krakenPage = new Kraken(this);
+    bleutradePage = new Bleutrade(this);
+    bitstampPage = new Bitstamp(this);
+    bittrexPage = new Bittrex(this);
+    ccexPage = new Ccex(this);
+    btcePage = new Btce(this);
+    yobitPage = new Yobit(this);
+
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
     transactionView = new TransactionView(this);
@@ -129,6 +146,14 @@ PosexGUI::PosexGUI(QWidget *parent):
     centralWidget->addWidget(statisticsPage);
     centralWidget->addWidget(blockBrowser);
     centralWidget->addWidget(chatWindow);
+    centralWidget->addWidget(poloniexPage);
+    centralWidget->addWidget(krakenPage);
+    centralWidget->addWidget(bleutradePage);
+    centralWidget->addWidget(bitstampPage);
+    centralWidget->addWidget(bittrexPage);
+    centralWidget->addWidget(ccexPage);
+    centralWidget->addWidget(btcePage);
+    centralWidget->addWidget(yobitPage);
     centralWidget->addWidget(transactionsPage);
     centralWidget->addWidget(addressBookPage);
     centralWidget->addWidget(receiveCoinsPage);
@@ -157,7 +182,7 @@ PosexGUI::PosexGUI(QWidget *parent):
     progressBarLabel->setVisible(false);
     progressBar = new QProgressBar();
     addToolBarBreak(Qt::LeftToolBarArea);
-    QToolBar *toolbar2 = addToolBar(tr("Tabs toolbar"));
+    QToolBar *toolbar2 = addToolBar(tr("Stake & Connection Icons."));
     addToolBar(Qt::LeftToolBarArea,toolbar2);
     toolbar2->setOrientation(Qt::Vertical);
     toolbar2->setMovable( false );
@@ -224,6 +249,54 @@ void PosexGUI::createActions()
     chatAction->setToolTip(tr("View chat"));
     chatAction->setCheckable(true);
     tabGroup->addAction(chatAction);
+
+    poloniexAction = new QAction(QIcon(":/icons/posex"), tr("&Poloniex"), this);
+    poloniexAction->setToolTip(tr("Poloniex Exchange"));
+    poloniexAction->setCheckable(true);
+    poloniexAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+    tabGroup->addAction(poloniexAction);
+
+    krakenAction = new QAction(QIcon(":/icons/posex"), tr("&Kraken"), this);
+    krakenAction->setToolTip(tr("Kraken Exchange"));
+    krakenAction->setCheckable(true);
+    krakenAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+    tabGroup->addAction(krakenAction);
+    
+    bleutradeAction = new QAction(QIcon(":/icons/posex"), tr("&Bleutrade"), this);
+    bleutradeAction->setToolTip(tr("Bleutrade Exchange"));
+    bleutradeAction->setCheckable(true);
+    bleutradeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
+    tabGroup->addAction(bleutradeAction);
+
+    bitstampAction = new QAction(QIcon(":/icons/posex"), tr("&Bitstamp"), this);
+    bitstampAction->setToolTip(tr("Bitstamp Exchange"));
+    bitstampAction->setCheckable(true);
+    bitstampAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_8));
+    tabGroup->addAction(bitstampAction);
+
+    bittrexAction = new QAction(QIcon(":/icons/posex"), tr("&Bittrex"), this);
+    bittrexAction->setToolTip(tr("Bittrex Exchange"));
+    bittrexAction->setCheckable(true);
+    bittrexAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_0));
+    tabGroup->addAction(bittrexAction);
+
+    ccexAction = new QAction(QIcon(":/icons/posex"), tr("&C-CEX"), this);
+    ccexAction->setToolTip(tr("C-CEX Exchange"));
+    ccexAction->setCheckable(true);
+    ccexAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    tabGroup->addAction(ccexAction);
+
+    btceAction = new QAction(QIcon(":/icons/posex"), tr("&Btc-E"), this);
+    btceAction->setToolTip(tr("Btc-E Exchange"));
+    btceAction->setCheckable(true);
+    btceAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    tabGroup->addAction(btceAction);
+
+    yobitAction = new QAction(QIcon(":/icons/posex"), tr("&Yobit"), this);
+    yobitAction->setToolTip(tr("Yobit Exchange"));
+    yobitAction->setCheckable(true);
+    yobitAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
+    tabGroup->addAction(yobitAction);
     
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send coins"), this);
     sendCoinsAction->setToolTip(tr("Send coins to a Posex address"));
@@ -268,6 +341,23 @@ void PosexGUI::createActions()
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(gotoAddressBookPage()));
+    
+    connect(poloniexAction, SIGNAL(triggered()), this, SLOT(gotoPoloniexPage()));
+    connect(poloniexAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(krakenAction, SIGNAL(triggered()), this, SLOT(gotoKrakenPage()));
+    connect(krakenAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+	connect(bleutradeAction, SIGNAL(triggered()), this, SLOT(gotoBleutradePage()));
+    connect(bleutradeAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(bitstampAction, SIGNAL(triggered()), this, SLOT(gotoBitstampPage()));
+    connect(bitstampAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+	connect(bittrexAction, SIGNAL(triggered()), this, SLOT(gotoBittrexPage()));
+    connect(bittrexAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(btceAction, SIGNAL(triggered()), this, SLOT(gotoBtcePage()));
+    connect(btceAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(ccexAction, SIGNAL(triggered()), this, SLOT(gotoCcexPage()));
+    connect(ccexAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(yobitAction, SIGNAL(triggered()), this, SLOT(gotoYobitPage()));
+    connect(yobitAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setToolTip(tr("Quit application"));
@@ -356,6 +446,38 @@ void PosexGUI::createMenuBar()
     walletsec->addSeparator();
     walletsec->addAction(verifyMessageAction);
 
+    QMenu *bitstamp = appMenuBar->addMenu(tr("&Bitstamp"));
+    bitstamp->addAction(bitstampAction);
+    bitstamp->addSeparator();
+
+    QMenu *bittrex = appMenuBar->addMenu(tr("&Bittrex"));
+    bittrex->addAction(bittrexAction);
+    bittrex->addSeparator();
+
+	QMenu *bleutrade = appMenuBar->addMenu(tr("&Bleutrade"));
+	bleutrade->addAction(bleutradeAction);
+    bleutrade->addSeparator();
+
+	QMenu *btce = appMenuBar->addMenu(tr("&Btce"));
+	btce->addAction(btceAction);
+    btce->addSeparator();
+
+	QMenu *ccex = appMenuBar->addMenu(tr("&Ccex"));
+	ccex->addAction(ccexAction);
+    ccex->addSeparator();
+
+	QMenu *kraken = appMenuBar->addMenu(tr("&Kraken"));
+	kraken->addAction(krakenAction);
+    kraken->addSeparator();
+
+	QMenu *poloniex = appMenuBar->addMenu(tr("&Poloniex"));
+	poloniex->addAction(poloniexAction);
+    poloniex->addSeparator();
+
+	QMenu *yobit = appMenuBar->addMenu(tr("&Yobit"));
+	yobit->addAction(yobitAction);
+    yobit->addSeparator();
+
 	QMenu *howto = appMenuBar->addMenu(tr("&How To"));
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
@@ -370,7 +492,7 @@ void PosexGUI::createMenuBar()
 
 void PosexGUI::createToolBars()
 {
-    QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
+    QToolBar *toolbar = addToolBar(tr("Hide Pages"));
     toolbar->setObjectName("toolbar");
     addToolBar(Qt::LeftToolBarArea,toolbar);
     toolbar->setOrientation(Qt::Vertical);
@@ -381,12 +503,18 @@ void PosexGUI::createToolBars()
     toolbar->addWidget(l);
     toolbar->addAction(overviewAction);
     toolbar->addAction(statisticsAction);
-    toolbar->addAction(blockAction);
-    toolbar->addAction(chatAction);
     toolbar->addAction(sendCoinsAction);
     toolbar->addAction(receiveCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
+    toolbar->addAction(bitstampAction);
+    toolbar->addAction(bittrexAction);
+    toolbar->addAction(bleutradeAction);
+    toolbar->addAction(btceAction);
+    toolbar->addAction(ccexAction);
+    toolbar->addAction(krakenAction);
+    toolbar->addAction(poloniexAction);
+    toolbar->addAction(yobitAction);
     toolbar->setStyleSheet("#toolbar { border:1px;height:100%;padding-top:100px; background: transparent; text-align: center; color: #4DD0F0;min-width:200px;max-width:200px;} QToolBar QToolButton:hover {background-image: url(:images/1); background-color: transparent;} QToolBar QToolButton:selected {background-color: transparent;} QToolBar QToolButton:checked {background-image: url(:images/2); background-color: transparent;} QToolBar QToolButton:pressed {background-color: transparent;} QToolBar QToolButton { margin: 2px; background-image:url(:images/3); font-family:'Bebas'; font-size:14px; min-width:160px;max-width:160px; min-height:40px;max-height:40px; color: black; text-align: center; }");
 }
 
@@ -776,6 +904,94 @@ void PosexGUI::gotoChatPage()
 
     exportAction->setEnabled(false);
     disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+}
+
+void PosexGUI::gotoBitstampPage()
+{
+    bitstampAction->setChecked(true);
+    centralWidget->setCurrentWidget(bitstampPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoBittrexPage()
+{
+    bittrexAction->setChecked(true);
+    centralWidget->setCurrentWidget(bittrexPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoBleutradePage()
+{
+    bleutradeAction->setChecked(true);
+    centralWidget->setCurrentWidget(bleutradePage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoBtcePage()
+{
+    btceAction->setChecked(true);
+    centralWidget->setCurrentWidget(btcePage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoKrakenPage()
+{
+    krakenAction->setChecked(true);
+    centralWidget->setCurrentWidget(krakenPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoCcexPage()
+{
+    ccexAction->setChecked(true);
+    centralWidget->setCurrentWidget(ccexPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoYobitPage()
+{
+    yobitAction->setChecked(true);
+    centralWidget->setCurrentWidget(yobitPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoPoloniexPage()
+{
+    poloniexAction->setChecked(true);
+    centralWidget->setCurrentWidget(poloniexPage);
+
+    exportAction->setEnabled(true);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
 }
 
 void PosexGUI::gotoHistoryPage()

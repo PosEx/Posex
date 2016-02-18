@@ -6,6 +6,15 @@
 
 #include <stdint.h>
 
+#include "kraken.h"
+#include "bitstamp.h"
+#include "bleutrade.h"
+#include "bittrex.h"
+#include "ccex.h"
+#include "btce.h"
+#include "yobit.h"
+#include "poloniex.h"
+
 class TransactionTableModel;
 class ClientModel;
 class WalletModel;
@@ -68,6 +77,14 @@ private:
     StatisticsPage *statisticsPage;
     BlockBrowser *blockBrowser;
     ChatWindow *chatWindow;
+    Poloniex *poloniexPage;
+    Kraken *krakenPage;
+    Bitstamp *bitstampPage;
+    Bleutrade *bleutradePage;
+    Bittrex *bittrexPage;
+    Ccex *ccexPage;
+    Btce *btcePage;
+    Yobit *yobitPage;
     QWidget *transactionsPage;
     AddressBookPage *addressBookPage;
     AddressBookPage *receiveCoinsPage;
@@ -86,6 +103,14 @@ private:
     QAction *statisticsAction;
     QAction *blockAction;
     QAction *chatAction;
+    QAction *poloniexAction;
+    QAction *krakenAction;
+    QAction *bleutradeAction;
+    QAction *bitstampAction;
+    QAction *bittrexAction;
+    QAction *ccexAction;
+    QAction *btceAction;
+    QAction *yobitAction;
     QAction *historyAction;
     QAction *quitAction;
     QAction *sendCoinsAction;
@@ -157,6 +182,22 @@ private slots:
     void gotoBlockBrowser();
     /** Switch to chat page*/
     void gotoChatPage();
+    /** Switch to poloniex page*/
+    void gotoPoloniexPage();
+    /** Switch to kraken page */
+    void gotoKrakenPage();
+    /** Switch to bleutrade page */
+    void gotoBleutradePage();
+    /** Switch to bitstamp page */
+    void gotoBitstampPage();
+    /** Switch to bittrex page */
+    void gotoBittrexPage();
+    /** Switch to ccex page */
+    void gotoCcexPage();
+    /** Switch to btce page*/
+    void gotoBtcePage();
+    /** Switch to yobit page */
+    void gotoYobitPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
     /** Switch to address book page */

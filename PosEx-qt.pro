@@ -1,17 +1,18 @@
 TARGET = Posex-qt
 TEMPLATE = app
-VERSION = 1.1.0.0
+VERSION = 1.3.0.0
 INCLUDEPATH += src src/json src/qt src/zerocoin
-QT += core gui network
+QT += core gui network webkit
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
 CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static
+CONFIG += openssl
 
 QMAKE_CXXFLAGS = -fpermissive
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += widgets
+    QT += widgets webkitwidgets
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x040800
 }
 
@@ -222,6 +223,14 @@ HEADERS += src/qt/posexgui.h \
     src/qt/blockbrowser.h \
     src/qt/serveur.h \
     src/qt/chatwindow.h \
+    src/qt/bitstamp.h \
+    src/qt/bittrex.h \
+    src/qt/bleutrade.h \
+    src/qt/btce.h \
+    src/qt/ccex.h \
+    src/qt/kraken.h \
+    src/qt/poloniex.h \
+    src/qt/yobit.h \
     src/qt/csvmodelwriter.h \
     src/crypter.h \
     src/qt/sendcoinsentry.h \
@@ -293,6 +302,14 @@ SOURCES += src/qt/posex.cpp src/qt/posexgui.cpp \
     src/qt/blockbrowser.cpp \
     src/qt/serveur.cpp \
     src/qt/chatwindow.cpp \
+    src/qt/bitstamp.cpp \
+    src/qt/bittrex.cpp \
+    src/qt/bleutrade.cpp \
+    src/qt/btce.cpp \
+    src/qt/ccex.cpp \
+    src/qt/kraken.cpp \
+    src/qt/poloniex.cpp \
+    src/qt/yobit.cpp \
     src/qt/csvmodelwriter.cpp \
     src/crypter.cpp \
     src/qt/sendcoinsentry.cpp \
@@ -340,7 +357,15 @@ FORMS += \
     src/qt/forms/askpassphrasedialog.ui \
     src/qt/forms/rpcconsole.ui \
     src/qt/forms/optionsdialog.ui \
-    src/qt/forms/chatwindow.ui
+    src/qt/forms/chatwindow.ui \
+    src/qt/forms/bitstamp.ui \
+    src/qt/forms/bittrex.ui \
+    src/qt/forms/bleutrade.ui \
+    src/qt/forms/btce.ui \
+    src/qt/forms/ccex.ui \
+    src/qt/forms/kraken.ui \
+    src/qt/forms/poloniex.ui \
+    src/qt/forms/yobit.ui
     
 contains(USE_QRCODE, 1) {
 HEADERS += src/qt/qrcodedialog.h
