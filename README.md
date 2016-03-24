@@ -2,7 +2,7 @@ Posex Coin 2016
 
 First Update complete. The following Have been added into the wallet with 
 
-UPDATE: V1.3.0.0 Beast
+UPDATE: V2.0.0.0 Beast
 
 Bitstamp
 Bittrex

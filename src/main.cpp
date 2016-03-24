@@ -992,6 +992,14 @@ int64_t GetProofOfWorkReward(int64_t nFees)
         printf("GetProofOfWorkReward() : create=%s nSubsidy=%"PRId64"\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
 
     }
+    else if(pindexBest->nHeight < 10000)
+    {
+        nSubsidy = 0 * COIN;
+    }
+    else if(pindexBest->nHeight > 11000)
+    {
+        nSubsidy = 0.1 * COIN;
+    }
 
     return nSubsidy + nFees;
 }
@@ -1006,151 +1014,87 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
     
     int64_t nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8);  // 10% yearly interest 
     
-    if(pindexBest->nHeight < 10000)
+    if(pindexBest->nHeight < 10020)
     {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 10000;  // 100,000% yearly interest 
+        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8);  // 10% yearly interest 
     }
-    if(pindexBest->nHeight < 20000)
+    else if(pindexBest->nHeight < 20000)
     {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 9000;  // 90,000% yearly interest 
+        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) / 2;  // 1000% yearly interest 
     }
-    if(pindexBest->nHeight < 30000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 8000;  // 80,000% yearly interest 
-    }
-    if(pindexBest->nHeight < 40000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 7000;  // 70,000% yearly interest 
-    }
-    if(pindexBest->nHeight < 50000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 6000;  // 60,000% yearly interest 
-    }
-    if(pindexBest->nHeight < 60000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 5000;  // 50,000% yearly interest 
-    }
-    if(pindexBest->nHeight < 70000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 4000;  // 40,000% yearly interest 
-    }
-    if(pindexBest->nHeight < 80000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 3000;  // 30,000% yearly interest 
-    }
-    if(pindexBest->nHeight < 90000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 2000;  // 20,000% yearly interest 
-    }
-    if(pindexBest->nHeight < 100000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 1000;  // 10,000% yearly interest 
-    }
-    if(pindexBest->nHeight < 110000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 900;  // 9000% yearly interest 
-    }
-    if(pindexBest->nHeight < 120000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 800;  // 8000% yearly interest 
-    }
-    if(pindexBest->nHeight < 130000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 700;  // 7000% yearly interest 
-    }
-    if(pindexBest->nHeight < 140000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 600;  // 6000% yearly interest 
-    }
-    if(pindexBest->nHeight < 150000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 500;  // 5000% yearly interest 
-    }
-    if(pindexBest->nHeight < 160000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 400;  // 4000% yearly interest 
-    }
-    if(pindexBest->nHeight < 170000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 300;  // 3000% yearly interest 
-    }
-    if(pindexBest->nHeight < 180000)
-    {
-        nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 200;  // 2000% yearly interest 
-    }
-    if(pindexBest->nHeight < 190000)
+    else if(pindexBest->nHeight < 30000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 100;  // 1000% yearly interest 
     }
-    if(pindexBest->nHeight < 200000)
+    else if(pindexBest->nHeight < 40000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 90;  // 900% yearly interest 
     }
-    if(pindexBest->nHeight < 210000)
+    else if(pindexBest->nHeight < 50000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 80;  // 800% yearly interest 
     }
-    if(pindexBest->nHeight < 220000)
+    else if(pindexBest->nHeight < 60000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 70;  // 700% yearly interest 
     }
-    if(pindexBest->nHeight < 230000)
+    else if(pindexBest->nHeight < 70000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 60;  // 600% yearly interest 
     }
-    if(pindexBest->nHeight < 240000)
+    else if(pindexBest->nHeight < 80000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 50;  // 500% yearly interest 
     }
-    if(pindexBest->nHeight < 250000)
+    else if(pindexBest->nHeight < 90000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 40;  // 400% yearly interest 
     }
-    if(pindexBest->nHeight < 260000)
+    else if(pindexBest->nHeight < 100000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 30;  // 300% yearly interest 
     }
-    if(pindexBest->nHeight < 270000)
+    else if(pindexBest->nHeight < 110000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 20;  // 200% yearly interest 
     }
-    if(pindexBest->nHeight < 280000)
+    else if(pindexBest->nHeight < 120000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 10;  // 100% yearly interest 
     }
-    if(pindexBest->nHeight < 290000)
+    else if(pindexBest->nHeight < 130000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 9;  // 90% yearly interest 
     }
-    if(pindexBest->nHeight < 300000)
+    else if(pindexBest->nHeight < 140000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 8;  // 80% yearly interest 
     }
-    if(pindexBest->nHeight < 310000)
+    else if(pindexBest->nHeight < 150000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 7;  // 70% yearly interest 
     }
-    if(pindexBest->nHeight < 320000)
+    else if(pindexBest->nHeight < 160000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 6;  // 60% yearly interest 
     }
-    if(pindexBest->nHeight < 330000)
+    else if(pindexBest->nHeight < 170000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 5;  // 50% yearly interest 
     }
-    if(pindexBest->nHeight < 340000)
+    else if(pindexBest->nHeight < 180000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 4;  // 40% yearly interest 
     }
-    if(pindexBest->nHeight < 350000)
+    else if(pindexBest->nHeight < 190000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 3;  // 30% yearly interest 
     }
-    if(pindexBest->nHeight < 360000)
+    else if(pindexBest->nHeight < 200000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 2;  // 20% yearly interest 
     }
-    if(pindexBest->nHeight < 370000)
+    else if(pindexBest->nHeight < 210000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8);  // 10% yearly interest 
     }
@@ -2283,9 +2227,6 @@ bool CBlock::AcceptBlock()
         return DoS(10, error("AcceptBlock() : prev block not found"));
     CBlockIndex* pindexPrev = (*mi).second;
     int nHeight = pindexPrev->nHeight+1;
-
-    if (IsProofOfWork() && nHeight > LAST_POW_BLOCK)
-        return DoS(100, error("AcceptBlock() : reject proof-of-work at height %d", nHeight));
         
     if (IsProofOfStake() && nHeight < MODIFIER_INTERVAL_SWITCH)
         return DoS(100, error("AcceptBlock() : reject proof-of-stake at height %d", nHeight));
