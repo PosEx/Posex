@@ -1,6 +1,6 @@
 TARGET = Posex-qt
 TEMPLATE = app
-VERSION = 2.0.0.0
+VERSION = 2.0.1.0
 INCLUDEPATH += src src/json src/qt src/zerocoin
 QT += core gui network webkit
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
@@ -8,8 +8,6 @@ CONFIG += no_include_pwd
 CONFIG += thread
 CONFIG += static
 CONFIG += openssl
-
-QMAKE_CXXFLAGS = -fpermissive
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets webkitwidgets
