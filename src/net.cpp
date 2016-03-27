@@ -1233,6 +1233,14 @@ void MapPort()
 // The second name should resolve to a list of seed addresses.
 static const char *strDNSSeed[][2] = {
     {"PosEx", "52.88.141.55"},
+    {"PosEx1", "178.20.139.146"},
+    {"PosEx2", "91.234.78.95"},
+    {"PosEx3", "82.20.209.59"},
+    {"PosEx4", "93.84.161.216"},
+    {"PosEx5", "94.241.197.182"},
+    {"PosEx6", "79.69.39.40"},
+    {"PosEx7", "216.189.153.5"},
+
 
 };
 
