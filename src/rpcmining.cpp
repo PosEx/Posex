@@ -14,6 +14,7 @@ using namespace json_spirit;
 using namespace std;
 
 extern unsigned int nStakeTargetSpacing;
+extern unsigned int nStakeTargetSpacingNew;
 
 Value getsubsidy(const Array& params, bool fHelp)
 {
@@ -73,7 +74,7 @@ Value getstakinginfo(const Array& params, bool fHelp)
 
     uint64_t nNetworkWeight = GetPoSKernelPS();
     bool staking = nLastCoinStakeSearchInterval && nWeight;
-    int nExpectedTime = staking ? (nStakeTargetSpacing * nNetworkWeight / nWeight) : -1;
+    int nExpectedTime = staking ? (nStakeTargetSpacingNew * nNetworkWeight / nWeight) : -1;
 
     Object obj;
 

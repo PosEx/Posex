@@ -73,6 +73,7 @@
 extern CWallet* pwalletMain;
 extern int64_t nLastCoinStakeSearchInterval;
 extern unsigned int nStakeTargetSpacing;
+extern unsigned int nStakeTargetSpacingNew;
 double GetPoSKernelPS();
 
 PosexGUI::PosexGUI(QWidget *parent):
@@ -1231,7 +1232,7 @@ void PosexGUI::updateStakingIcon()
     if (nLastCoinStakeSearchInterval && nWeight)
     {
         uint64_t nNetworkWeight = GetPoSKernelPS();
-        unsigned nEstimateTime = nStakeTargetSpacing * nNetworkWeight / nWeight;
+        unsigned nEstimateTime = nStakeTargetSpacingNew * nNetworkWeight / nWeight;
 
         QString text;
         if (nEstimateTime < 60)

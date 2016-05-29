@@ -1,6 +1,6 @@
 TARGET = Posex-qt
 TEMPLATE = app
-VERSION = 2.1.1.0
+VERSION = 2.3.0.0
 INCLUDEPATH += src src/json src/qt src/zerocoin
 QT += core gui network webkit
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE

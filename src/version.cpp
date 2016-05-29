@@ -44,7 +44,7 @@ const std::string CLIENT_NAME("Posex");
     "v" DO_STRINGIZE(maj) "" DO_STRINGIZE(min) "." DO_STRINGIZE(rev) "." DO_STRINGIZE(build) "" commit
 
 #define BUILD_DESC_FROM_UNKNOWN(maj,min,rev,build) \
-    "v" DO_STRINGIZE(maj) "1." DO_STRINGIZE(min) "2." DO_STRINGIZE(rev) "2." DO_STRINGIZE(build) "-Beta"
+    "v" DO_STRINGIZE(maj) "." DO_STRINGIZE(min) "." DO_STRINGIZE(rev) "." DO_STRINGIZE(build) "-Beta"
 
 #ifndef BUILD_DESC
 #    ifdef GIT_COMMIT_ID

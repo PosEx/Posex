@@ -49,6 +49,7 @@ unsigned int nModifierInterval = 16 * 60; // 16 minutes
 
 
 unsigned int nStakeTargetSpacing = 10; // 10 seconds Pos blocks
+unsigned int nStakeTargetSpacingNew = 30; // new block time is 30 Seconds
 unsigned int nStakeMinAge = 1 * 60 * 60; // 1 hour
 unsigned int nStakeMaxAge = 5 * 24 * 60 * 60; // 5 days
 
@@ -996,9 +997,13 @@ int64_t GetProofOfWorkReward(int64_t nFees)
     {
         nSubsidy = 0 * COIN;
     }
-    else if(pindexBest->nHeight > 11000)
+    else if(pindexBest->nHeight < 600000)
     {
         nSubsidy = 0.1 * COIN;
+    }
+    else if(pindexBest->nHeight > 600000)
+    {
+        nSubsidy = 1 * COIN;
     }
 
     return nSubsidy + nFees;
@@ -1030,7 +1035,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 900;  // 9,000% yearly interest 
     }
-else if(pindexBest->nHeight < 50000)
+    else if(pindexBest->nHeight < 50000)
     {
         nSubsidy = nCoinAge * COIN_YEAR_REWARD * 33 / (365 * 33 + 8) * 7000;  // 70,000% yearly interest 
     }
@@ -1189,6 +1194,10 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     int64_t nTargetSpacing = nPowTargetSpacing;
     if(fProofOfStake)
         nTargetSpacing = nStakeTargetSpacing;
+    else if(pindexBest-> nHeight > 600000)
+    {
+        nTargetSpacing = nStakeTargetSpacingNew;
+    }
 
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
