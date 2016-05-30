@@ -30,16 +30,26 @@ class CInv;
 class CRequestTracker;
 class CNode;
 
+// The maximum block size
 static const unsigned int MAX_BLOCK_SIZE = 20000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
+// The maximum allowed number of signature check operations in a block (network rule)
 static const unsigned int MAX_BLOCK_SIGOPS = MAX_BLOCK_SIZE/50;
+// The maximum number of orphans transactions = block max block size divided by 100
 static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
+// The maximum number of entries in an 'inv' protocol message
 static const unsigned int MAX_INV_SZ = 50000;
+// The minimum Tx Fee
 static const int64_t MIN_TX_FEE =  10000; // 0.000100
+// The minimum relay Tx Fee for miners
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
+// The maximum money to be sent at one go
 static const int64_t MAX_MONEY = 10000000 * COIN; // 1 million
+// The maximum reward for proof of stake in cent
 static const int64_t COIN_YEAR_REWARD = 10 * CENT; // 10%
+// The maximum reward for proof of stake in coin/percent
 static const int64_t MAX_MINT_PROOF_OF_STAKE = 0.10 * COIN;  // 10% annual interest
+// The block at which proof of stake starts
 static const int MODIFIER_INTERVAL_SWITCH = 1;
 
 
@@ -52,7 +62,10 @@ static const int fHaveUPnP = true;
 #else
 static const int fHaveUPnP = false;
 #endif
+
+// The very first block on PosEx Main network
 static const uint256 hashGenesisBlock("0x00000898bf7bc1d0ffec5070d35dbcc10bad98efb22dc1b8e7c460d77bd671ad");
+// The very first block on PosEx TestNet network
 static const uint256 hashGenesisBlockTestNet("0x0000bf5e7d7c54985ed81ee79e30d58a895f913b544400c18e812fb8ec1efb91");
 
 inline int64_t PastDrift(int64_t nTime)   { return nTime - 6 * 60; } // up to 6 minutes from the past
