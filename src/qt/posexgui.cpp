@@ -35,6 +35,13 @@
 #include "ccex.h"
 #include "btce.h"
 #include "yobit.h"
+#include "youtube.h"
+#include "netflix.h"
+#include "facebook.h"
+#include "flickr.h"
+#include "instagram.h"
+#include "linkedin.h"
+#include "twitter.h"
 
 #ifdef Q_OS_MAC
 #include "macdockiconhandler.h"
@@ -130,6 +137,13 @@ PosexGUI::PosexGUI(QWidget *parent):
     ccexPage = new Ccex(this);
     btcePage = new Btce(this);
     yobitPage = new Yobit(this);
+    youtubePage = new Youtube(this);
+    netflixPage = new Netflix(this);
+    facebookPage = new Facebook(this);
+    flickrPage = new Flickr(this);
+    instagramPage = new Instagram(this);
+    linkedinPage = new Linkedin(this);
+    twitterPage = new Twitter(this);
 
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -155,6 +169,13 @@ PosexGUI::PosexGUI(QWidget *parent):
     centralWidget->addWidget(ccexPage);
     centralWidget->addWidget(btcePage);
     centralWidget->addWidget(yobitPage);
+    centralWidget->addWidget(youtubePage);
+    centralWidget->addWidget(netflixPage);
+    centralWidget->addWidget(facebookPage);
+    centralWidget->addWidget(flickrPage);
+    centralWidget->addWidget(instagramPage);
+    centralWidget->addWidget(linkedinPage);
+    centralWidget->addWidget(twitterPage);
     centralWidget->addWidget(transactionsPage);
     centralWidget->addWidget(addressBookPage);
     centralWidget->addWidget(receiveCoinsPage);
@@ -298,6 +319,48 @@ void PosexGUI::createActions()
     yobitAction->setCheckable(true);
     yobitAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(yobitAction);
+
+    youtubeAction = new QAction(QIcon(":/icons/posex"), tr("&Youtube"), this);
+    youtubeAction->setToolTip(tr("Watch Youtube"));
+    youtubeAction->setCheckable(true);
+    youtubeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+    tabGroup->addAction(youtubeAction);
+    
+    netflixAction = new QAction(QIcon(":/icons/posex"), tr("&Netflix"), this);
+    netflixAction->setToolTip(tr("Watch Netflix"));
+    netflixAction->setCheckable(true);
+    netflixAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
+    tabGroup->addAction(netflixAction);
+
+    facebookAction = new QAction(QIcon(":/icons/posex"), tr("&Facebook"), this);
+    facebookAction->setToolTip(tr("Facebook"));
+    facebookAction->setCheckable(true);
+    facebookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_8));
+    tabGroup->addAction(facebookAction);
+
+    flickrAction = new QAction(QIcon(":/icons/posex"), tr("&Flickr"), this);
+    flickrAction->setToolTip(tr("Flickr"));
+    flickrAction->setCheckable(true);
+    flickrAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_0));
+    tabGroup->addAction(flickrAction);
+
+    instagramAction = new QAction(QIcon(":/icons/posex"), tr("&Instagram"), this);
+    instagramAction->setToolTip(tr("Instagram"));
+    instagramAction->setCheckable(true);
+    instagramAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    tabGroup->addAction(instagramAction);
+
+    linkedinAction = new QAction(QIcon(":/icons/posex"), tr("&Linked In"), this);
+    linkedinAction->setToolTip(tr("Linkedin"));
+    linkedinAction->setCheckable(true);
+    linkedinAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    tabGroup->addAction(linkedinAction);
+
+    twitterAction = new QAction(QIcon(":/icons/posex"), tr("&Twitter"), this);
+    twitterAction->setToolTip(tr("Twitter"));
+    twitterAction->setCheckable(true);
+    twitterAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
+    tabGroup->addAction(twitterAction);
     
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send coins"), this);
     sendCoinsAction->setToolTip(tr("Send coins to a Posex address"));
@@ -359,6 +422,20 @@ void PosexGUI::createActions()
     connect(ccexAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(yobitAction, SIGNAL(triggered()), this, SLOT(gotoYobitPage()));
     connect(yobitAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(youtubeAction, SIGNAL(triggered()), this, SLOT(gotoYoutubePage()));
+    connect(youtubeAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(netflixAction, SIGNAL(triggered()), this, SLOT(gotoNetflixPage()));
+    connect(netflixAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(facebookAction, SIGNAL(triggered()), this, SLOT(gotoFacebookPage()));
+    connect(facebookAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(flickrAction, SIGNAL(triggered()), this, SLOT(gotoFlickrPage()));
+    connect(flickrAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(instagramAction, SIGNAL(triggered()), this, SLOT(gotoInstagramPage()));
+    connect(instagramAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(linkedinAction, SIGNAL(triggered()), this, SLOT(gotoLinkedinPage()));
+    connect(linkedinAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(twitterAction, SIGNAL(triggered()), this, SLOT(gotoTwittertPage()));
+    connect(twitterAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setToolTip(tr("Quit application"));
@@ -447,37 +524,40 @@ void PosexGUI::createMenuBar()
     walletsec->addSeparator();
     walletsec->addAction(verifyMessageAction);
 
-    QMenu *bitstamp = appMenuBar->addMenu(tr("&Bitstamp"));
-    bitstamp->addAction(bitstampAction);
-    bitstamp->addSeparator();
+    QMenu *exchanges = appMenuBar->addMenu(tr("&Exchanges"));
+    exchanges->addAction(bitstampAction);
+    exchanges->addSeparator();
+    exchanges->addAction(bittrexAction);
+    exchanges->addSeparator();
+	exchanges->addAction(bleutradeAction);
+    exchanges->addSeparator();
+	exchanges->addAction(btceAction);
+    exchanges->addSeparator();
+	exchanges->addAction(ccexAction);
+    exchanges->addSeparator();
+	exchanges->addAction(krakenAction);
+    exchanges->addSeparator();
+	exchanges->addAction(poloniexAction);
+    exchanges->addSeparator();
+	exchanges->addAction(yobitAction);
+    exchanges->addSeparator();
 
-    QMenu *bittrex = appMenuBar->addMenu(tr("&Bittrex"));
-    bittrex->addAction(bittrexAction);
-    bittrex->addSeparator();
+    QMenu *social = appMenuBar->addMenu(tr("&Social Networks"));
+    social->addAction(facebookAction);
+    social->addSeparator();
+    social->addAction(flickrAction);
+    social->addSeparator();
+    social->addAction(instagramAction);
+    social->addSeparator();
+    social->addAction(linkedinAction);
+    social->addSeparator();
+    social->addAction(twitterAction);
 
-	QMenu *bleutrade = appMenuBar->addMenu(tr("&Bleutrade"));
-	bleutrade->addAction(bleutradeAction);
-    bleutrade->addSeparator();
-
-	QMenu *btce = appMenuBar->addMenu(tr("&Btce"));
-	btce->addAction(btceAction);
-    btce->addSeparator();
-
-	QMenu *ccex = appMenuBar->addMenu(tr("&Ccex"));
-	ccex->addAction(ccexAction);
-    ccex->addSeparator();
-
-	QMenu *kraken = appMenuBar->addMenu(tr("&Kraken"));
-	kraken->addAction(krakenAction);
-    kraken->addSeparator();
-
-	QMenu *poloniex = appMenuBar->addMenu(tr("&Poloniex"));
-	poloniex->addAction(poloniexAction);
-    poloniex->addSeparator();
-
-	QMenu *yobit = appMenuBar->addMenu(tr("&Yobit"));
-	yobit->addAction(yobitAction);
-    yobit->addSeparator();
+    QMenu *videos = appMenuBar->addMenu(tr("&Videos"));
+    videos->addAction(youtubeAction);
+    videos->addSeparator();
+    videos->addAction(netflixAction);
+    videos->addSeparator();
 
 	QMenu *howto = appMenuBar->addMenu(tr("&How To"));
 
@@ -508,14 +588,6 @@ void PosexGUI::createToolBars()
     toolbar->addAction(receiveCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
-    toolbar->addAction(bitstampAction);
-    toolbar->addAction(bittrexAction);
-    toolbar->addAction(bleutradeAction);
-    toolbar->addAction(btceAction);
-    toolbar->addAction(ccexAction);
-    toolbar->addAction(krakenAction);
-    toolbar->addAction(poloniexAction);
-    toolbar->addAction(yobitAction);
     toolbar->setStyleSheet("#toolbar { border:1px;height:100%;padding-top:100px; background: transparent; text-align: center; color: #4DD0F0;min-width:200px;max-width:200px;} QToolBar QToolButton:hover {background-image: url(:images/1); background-color: transparent;} QToolBar QToolButton:selected {background-color: transparent;} QToolBar QToolButton:checked {background-image: url(:images/2); background-color: transparent;} QToolBar QToolButton:pressed {background-color: transparent;} QToolBar QToolButton { margin: 2px; background-image:url(:images/3); font-family:'Bebas'; font-size:14px; min-width:160px;max-width:160px; min-height:40px;max-height:40px; color: black; text-align: center; }");
 }
 
@@ -988,6 +1060,83 @@ void PosexGUI::gotoPoloniexPage()
 {
     poloniexAction->setChecked(true);
     centralWidget->setCurrentWidget(poloniexPage);
+
+    exportAction->setEnabled(true);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoYoutubePage()
+{
+    youtubeAction->setChecked(true);
+    centralWidget->setCurrentWidget(youtubePage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoNetflixPage()
+{
+    netflixAction->setChecked(true);
+    centralWidget->setCurrentWidget(netflixPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoFacebookPage()
+{
+    facebookAction->setChecked(true);
+    centralWidget->setCurrentWidget(facebookPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoFlickrPage()
+{
+    flickrAction->setChecked(true);
+    centralWidget->setCurrentWidget(flickrPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoInstagramPage()
+{
+    instagramAction->setChecked(true);
+    centralWidget->setCurrentWidget(instagramPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoLinkedinPage()
+{
+    linkedinAction->setChecked(true);
+    centralWidget->setCurrentWidget(linkedinPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+    centralWidget->setMaximumWidth(1280);
+    centralWidget->setMaximumHeight(1024);
+}
+
+void PosexGUI::gotoTwitterPage()
+{
+    twitterAction->setChecked(true);
+    centralWidget->setCurrentWidget(twitterPage);
 
     exportAction->setEnabled(true);
     disconnect(exportAction, SIGNAL(triggered()), 0, 0);

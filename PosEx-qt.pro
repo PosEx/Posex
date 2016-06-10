@@ -1,8 +1,8 @@
 TARGET = Posex-qt
 TEMPLATE = app
-VERSION = 2.3.0.0
+VERSION = 2.5.0.0
 INCLUDEPATH += src src/json src/qt src/zerocoin
-QT += core gui network webkit
+QT += core gui network webkit multimedia
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
 CONFIG += no_include_pwd
 CONFIG += thread
@@ -10,7 +10,7 @@ CONFIG += static
 CONFIG += openssl
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += widgets webkitwidgets
+    QT += widgets webkitwidgets multimediawidgets
     DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x040800
 }
 
@@ -24,6 +24,17 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 #    BOOST_INCLUDE_PATH, BOOST_LIB_PATH, BDB_INCLUDE_PATH,
 #    BDB_LIB_PATH, OPENSSL_INCLUDE_PATH and OPENSSL_LIB_PATH respectively
 
+BOOST_LIB_SUFFIX=-mgw49-mt-s-1_55
+BOOST_INCLUDE_PATH=C:/deps/boost_1_55_0
+BOOST_LIB_PATH=C:/deps/boost_1_55_0/stage/lib
+BDB_INCLUDE_PATH=C:/deps/db-4.8.30.NC/build_unix
+BDB_LIB_PATH=C:/deps/db-4.8.30.NC/build_unix
+OPENSSL_INCLUDE_PATH=C:/deps/openssl-1.0.1p/include
+OPENSSL_LIB_PATH=C:/deps/openssl-1.0.1p
+MINIUPNPC_INCLUDE_PATH=C:/deps
+MINIUPNPC_LIB_PATH=C:/deps/miniupnpc
+QRENCODE_INCLUDE_PATH=C:/deps/qrencode-3.4.4
+QRENCODE_LIB_PATH=C:/deps/qrencode-3.4.4/.libs
 OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
@@ -226,8 +237,15 @@ HEADERS += src/qt/posexgui.h \
     src/qt/btce.h \
     src/qt/ccex.h \
     src/qt/kraken.h \
+    src/qt/netflix.h \
     src/qt/poloniex.h \
     src/qt/yobit.h \
+    src/qt/youtube.h \
+    src/qt/facebook.h \
+    src/qt/flickr.h \
+    src/qt/instagram.h \
+    src/qt/linkedIn.h \
+    src/qt/twitter.h \
     src/qt/csvmodelwriter.h \
     src/crypter.h \
     src/qt/sendcoinsentry.h \
@@ -305,8 +323,15 @@ SOURCES += src/qt/posex.cpp src/qt/posexgui.cpp \
     src/qt/btce.cpp \
     src/qt/ccex.cpp \
     src/qt/kraken.cpp \
+    src/qt/netflix.cpp \
     src/qt/poloniex.cpp \
     src/qt/yobit.cpp \
+    src/qt/youtube.cpp \
+    src/qt/facebook.cpp \
+    src/qt/flickr.cpp \
+    src/qt/instagram.cpp \
+    src/qt/linkedIn.cpp \
+    src/qt/twitter.cpp \
     src/qt/csvmodelwriter.cpp \
     src/crypter.cpp \
     src/qt/sendcoinsentry.cpp \
@@ -361,8 +386,15 @@ FORMS += \
     src/qt/forms/btce.ui \
     src/qt/forms/ccex.ui \
     src/qt/forms/kraken.ui \
+    src/qt/forms/netflix.ui \
     src/qt/forms/poloniex.ui \
-    src/qt/forms/yobit.ui
+    src/qt/forms/yobit.ui \
+    src/qt/forms/youtube.ui \
+    src/qt/forms/facebook.ui \
+    src/qt/forms/flickr.ui \
+    src/qt/forms/instagram.ui \
+    src/qt/forms/linkedIn.ui \
+    src/qt/forms/twitter.ui
     
 contains(USE_QRCODE, 1) {
 HEADERS += src/qt/qrcodedialog.h

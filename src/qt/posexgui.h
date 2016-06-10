@@ -13,7 +13,14 @@
 #include "ccex.h"
 #include "btce.h"
 #include "yobit.h"
+#include "youtube.h"
+#include "netflix.h"
 #include "poloniex.h"
+#include "facebook.h"
+#include "flickr.h"
+#include "instagram.h"
+#include "linkedin.h"
+#include "twitter.h"
 
 class TransactionTableModel;
 class ClientModel;
@@ -85,6 +92,13 @@ private:
     Ccex *ccexPage;
     Btce *btcePage;
     Yobit *yobitPage;
+    Youtube *youtubePage;
+    Netflix *netflixPage;
+    Facebook *facebookPage;
+    Flickr *flickrPage;
+    Instagram *instagramPage;
+    Linkedin *linkedinPage;
+    Twitter *twitterPage;
     QWidget *transactionsPage;
     AddressBookPage *addressBookPage;
     AddressBookPage *receiveCoinsPage;
@@ -111,6 +125,13 @@ private:
     QAction *ccexAction;
     QAction *btceAction;
     QAction *yobitAction;
+    QAction *youtubeAction;
+    QAction *netflixAction;
+    QAction *facebookAction;
+    QAction *flickrAction;
+    QAction *instagramAction;
+    QAction *linkedinAction;
+    QAction *twitterAction;
     QAction *historyAction;
     QAction *quitAction;
     QAction *sendCoinsAction;
@@ -198,6 +219,20 @@ private slots:
     void gotoBtcePage();
     /** Switch to yobit page */
     void gotoYobitPage();
+    /** Switch to youtube page */
+    void gotoYoutubePage();
+    /** Switch to netflix page */
+    void gotoNetflixPage();
+    /** Switch to facebook page */
+    void gotoFacebookPage();
+    /** Switch to flickr page */
+    void gotoFlickrPage();
+    /** Switch to instagram page */
+    void gotoInstagramPage();
+    /** Switch to linkedin page*/
+    void gotoLinkedinPage();
+    /** Switch to twitter page */
+    void gotoTwitterPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
     /** Switch to address book page */
